@@ -1,8 +1,8 @@
 export interface Event {
-    id: string,
+    _id: string,
     title: string,
-    startDate: string,
-    endDate: string,
+    start_date: string,
+    end_date: string,
     notes: string,
 }
 
@@ -16,7 +16,7 @@ export interface EventFetchAction {
 export interface EventAddAction {
     type: 'add',
     payload: {
-        event: Omit<Event, "id">
+        event: Event
     }
 }
 
@@ -30,7 +30,7 @@ export interface EventUpdateAction {
 export interface EventDeleteAction {
     type: 'delete',
     payload: {
-        eventId: Event['id']
+        eventId: Event['_id']
     }
 }
 

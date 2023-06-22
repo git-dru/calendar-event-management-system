@@ -1,5 +1,4 @@
 import React, { useReducer, useEffect } from "react";
-import { v4 as uuid } from "uuid";
 
 import { Event, EventsAction } from "types";
 import { getEvents } from "api/events";
@@ -25,7 +24,6 @@ export function useEventsReducer(): [
 
       case "add":
         const newEvent: Event = {
-          id: uuid(),
           ...action.payload.event,
         };
         return { ...state, events: [...state.events, newEvent] };
@@ -34,7 +32,7 @@ export function useEventsReducer(): [
         return {
           ...state,
           events: state.events.filter(
-            (event) => event.id !== action.payload.eventId
+            (event) => event._id !== action.payload.eventId
           ),
         };
       default:
@@ -49,9 +47,14 @@ export function useEventsReducer(): [
 
   useEffect(() => {
     // TODO: Call fetch action
-    getEvents().then((data) => {
-      dispatch({ type: "fetch", payload: { data } });
-    });
+    getEvents()
+      .then((res: any) => {
+        const events: Event[] = res.data.events;
+        dispatch({ type: "fetch", payload: { data: events } });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }, []);
 
   return [state, dispatch];

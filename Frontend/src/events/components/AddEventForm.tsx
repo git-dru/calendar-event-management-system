@@ -3,7 +3,7 @@ import { InputField, Button, DateTimePicker } from "shared/components";
 
 interface AddEventFormProps {
   onSubmit: (
-    data: Record<"title" | "startDate" | "endDate" | "notes", string>
+    data: Record<"title" | "start_date" | "end_date" | "notes", string>
   ) => void;
   onCancel: () => void;
 }
@@ -39,9 +39,9 @@ export function AddEventForm({ onSubmit, onCancel }: AddEventFormProps) {
           onClick={() => {
             if (startDate && title && endDate && notes) {
               onSubmit({
-                startDate: new Date(startDate).toISOString(),
+                start_date: new Date(startDate).toISOString(),
                 title,
-                endDate: new Date(startDate).toISOString(),
+                end_date: new Date(startDate).toISOString(),
                 notes,
               });
               reset();
