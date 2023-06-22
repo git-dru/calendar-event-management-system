@@ -17,7 +17,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(compression());
 
-app.use('/api', cors(), apiRoutes);
+app.use('/', cors(), apiRoutes);
 
 app.get("/", (req, res) => {
   res.json({ message: "Welcome to Event Mangement API!" });
