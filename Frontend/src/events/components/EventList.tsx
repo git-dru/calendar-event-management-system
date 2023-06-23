@@ -21,6 +21,7 @@ export const EventList = () => {
     createEvent(data)
       .then((res: any) => {
         const event: Event = res.data.event;
+        toast.success("Successfully Added");
         eventsDispatch({ type: "add", payload: { event } });
       })
       .catch((err) => {

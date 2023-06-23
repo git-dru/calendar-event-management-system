@@ -24,14 +24,14 @@ export function AddEventForm({ event, onSubmit, onCancel }: AddEventFormProps) {
     event ? moment(event.start_date) : moment(new Date())
   );
   const [endDate, setEndDate] = useState<Moment>(
-    event ? moment(event.end_date) : moment(new Date())
+    event ? moment(event.end_date) : moment(new Date()).add(30, "minutes")
   );
   const [notes, setNotes] = useState<string>(event ? event.notes : "");
 
   const reset = () => {
     setStartDate(moment(new Date()));
     setTitle("");
-    setEndDate(moment(new Date()));
+    setEndDate(moment(new Date()).add(30, "minutes"));
     setNotes("");
     onCancel();
   };

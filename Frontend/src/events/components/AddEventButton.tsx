@@ -8,8 +8,8 @@ export function AddEventButton({ onClick }: AddEventButtonProps) {
     <div
       style={{
         cursor: "pointer",
-        paddingTop: "7rem",
-        paddingBottom: "7rem",
+        paddingTop: "3rem",
+        paddingBottom: "3rem",
         textAlign: "center",
       }}
       onClick={onClick}
