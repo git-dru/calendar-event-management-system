@@ -38,6 +38,15 @@ export function AddEventForm({ event, onSubmit, onCancel }: AddEventFormProps) {
 
   //validate
   const isValidated = (): boolean => {
+    if (
+      title === event?.title &&
+      notes === event?.notes &&
+      startDate.isSame(moment(event.start_date)) &&
+      endDate.isSame(moment(event.end_date))
+    ) {
+      toast.error("No Value Updated");
+      return false;
+    }
     // Validate start date
     if (!startDate.isValid()) {
       toast.error("Please input a valid start date!");
