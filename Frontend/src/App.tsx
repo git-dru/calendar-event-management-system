@@ -2,7 +2,8 @@ import { EventList } from "events/components";
 import { EventProvider } from "events/components/EventProvider";
 import "./App.css";
 import { Header } from "./shared/components";
-
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 function App() {
   return (
     <div className="App">
@@ -18,6 +19,7 @@ function App() {
           </div>
         </EventProvider>
       </div>
+      <ToastContainer />
     </div>
   );
 }

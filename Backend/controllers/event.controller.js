@@ -1,12 +1,13 @@
 const Event = require('../models/event.model')
+const moment = require('moment');
 
 async function create(req, res) {
   const { event } = req.body
   try {
     const newEvent = await new Event({
       title: event.title,
-      start_date: event.startDate,
-      end_date: event.endDate,
+      start_date: moment(event.start_date, 'MMMM Do YYYY, h:mm:ss a').toDate(),
+      end_date: moment(event.end_date, 'MMMM Do YYYY, h:mm:ss a').toDate(),
       notes: event.notes
     }).save()
     return res.status(200).json({ event: newEvent })
