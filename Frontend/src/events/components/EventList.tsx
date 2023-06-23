@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 import { EventCard } from "./EventCard";
 import { AddEventButton } from "./AddEventButton";
-import { AddEventForm } from "./AddEventForm";
+import { AddEventForm, EventFormProps } from "./AddEventForm";
 import { Card } from "shared/components";
 
 import { useEvents } from "./EventProvider";
@@ -17,9 +17,7 @@ export const EventList = () => {
   const [displayOptionType, setDisplayOptionType] =
     useState<NewEventMode>("BUTTON");
 
-  const onCreateEvent = (
-    data: Record<"title" | "start_date" | "end_date" | "notes", string>
-  ) => {
+  const onCreateEvent = (data: EventFormProps) => {
     createEvent(data)
       .then((res: any) => {
         const event: Event = res.data.event;

@@ -30,6 +30,8 @@ export function DateTimePicker({ name, date, setDate }: DateTimePickerProps) {
         dateFormat="Pp"
         showTimeSelect
         timeFormat="p"
+        showYearDropdown
+        scrollableMonthYearDropdown
       />
     </div>
   );

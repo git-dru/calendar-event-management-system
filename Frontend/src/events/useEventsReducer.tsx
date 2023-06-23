@@ -28,6 +28,17 @@ export function useEventsReducer(): [
         };
         return { ...state, events: [...state.events, newEvent] };
 
+      case "update":
+        const updatedEvent: Event = {
+          ...action.payload.event,
+        };
+        return {
+          ...state,
+          events: state.events.map((event) =>
+            event._id === updatedEvent._id ? updatedEvent : event
+          ),
+        };
+
       case "delete":
         return {
           ...state,

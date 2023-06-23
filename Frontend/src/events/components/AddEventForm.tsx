@@ -2,19 +2,31 @@ import React, { useState } from "react";
 import { InputField, Button, DateTimePicker } from "shared/components";
 import moment, { Moment } from "moment";
 import { toast } from "react-toastify";
+
+export type EventFormProps = {
+  _id?: string;
+  title: string;
+  start_date: string;
+  end_date: string;
+  notes: string;
+};
+
 interface AddEventFormProps {
-  onSubmit: (
-    data: Record<"title" | "start_date" | "end_date" | "notes", string>
-  ) => void;
+  event?: EventFormProps;
+  onSubmit: (data: EventFormProps) => void;
   onCancel: () => void;
 }
 
-export function AddEventForm({ onSubmit, onCancel }: AddEventFormProps) {
+export function AddEventForm({ event, onSubmit, onCancel }: AddEventFormProps) {
   // TODO: Implement form for adding a event
-  const [title, setTitle] = useState<string>("");
-  const [startDate, setStartDate] = useState<Moment>(moment(new Date()));
-  const [endDate, setEndDate] = useState<Moment>(moment(new Date()));
-  const [notes, setNotes] = useState<string>("");
+  const [title, setTitle] = useState<string>(event ? event.title : "");
+  const [startDate, setStartDate] = useState<Moment>(
+    event ? moment(event.start_date) : moment(new Date())
+  );
+  const [endDate, setEndDate] = useState<Moment>(
+    event ? moment(event.end_date) : moment(new Date())
+  );
+  const [notes, setNotes] = useState<string>(event ? event.notes : "");
 
   const reset = () => {
     setStartDate(moment(new Date()));
@@ -69,6 +81,7 @@ export function AddEventForm({ onSubmit, onCancel }: AddEventFormProps) {
           onClick={() => {
             if (isValidated()) {
               onSubmit({
+                _id: event?._id,
                 start_date: startDate.format("MMMM Do YYYY, h:mm:ss a"),
                 title,
                 end_date: endDate.format("MMMM Do YYYY, h:mm:ss a"),
