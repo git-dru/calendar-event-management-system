@@ -1,6 +1,38 @@
 const Event = require('../models/event.model')
 const moment = require('moment');
 
+const isValidated = (event) => {
+  const title = event?.title;
+  const startDate = moment(event?.start_date, 'MMMM Do YYYY, h:mm:ss a');
+  const endDate = moment(event?.end_date, 'MMMM Do YYYY, h:mm:ss a');
+  const notes = event?.notes;
+
+  // Validate start date
+  if (!startDate.isValid()) {
+    console.log("Please input a valid start date!");
+    return false;
+  }
+
+  // Validate end date
+  if (!endDate.isValid()) {
+    console.log("Please input a valid end date!");
+    return false;
+  }
+
+  // Check if end date is after start date
+  if (!endDate.isAfter(startDate)) {
+    console.log("End date must be after start date!");
+    return false;
+  }
+
+  // Check if title and notes are empty
+  if (title.trim() === "" || notes.trim() === "") {
+    console.log("Please input all required data");
+    return false;
+  }
+  return true;
+}
+
 const overlapExists = async (newEvent, events) => {
   const newEventStart = moment(newEvent.start_date, 'MMMM Do YYYY, h:mm:ss a');
   const newEventEnd = moment(newEvent.end_date, 'MMMM Do YYYY, h:mm:ss a');
@@ -22,6 +54,10 @@ async function create(req, res) {
     const newEventEnd = moment(event.end_date, 'MMMM Do YYYY, h:mm:ss a');
 
     const events = await Event.find()
+
+    if (!isValidated(event)) {
+      return res.status(400).json({ error: 'Invalid Input Data.' });
+    }
 
     if (await overlapExists(event, events)) {
       return res.status(400).json({ error: 'Event overlaps with an existing event.' });
@@ -56,6 +92,10 @@ async function update(req, res) {
     const newEventEnd = moment(event.end_date, 'MMMM Do YYYY, h:mm:ss a');
 
     const events = await Event.find({ _id: { $ne: event._id } });
+
+    if (!isValidated(event)) {
+      return res.status(400).json({ error: 'Invalid Input Data.' });
+    }
 
     if (await overlapExists(event, events)) {
       return res.status(400).json({ error: 'Event overlaps with an existing event.' });
