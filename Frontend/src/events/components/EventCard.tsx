@@ -49,7 +49,7 @@ export const EventCard = ({ event }: EventCardProps) => {
             <h6 className="card-subtitle mb-2 my-5 text-muted">
               {moment(event.end_date).format("MMMM Do YYYY, h:mm:ss a")}
             </h6>
-            <p className="text-justify my-5 " style={{ fontSize: "14px" }}>
+            <p className="text-center my-5 " style={{ fontSize: "14px" }}>
               {event.notes}
             </p>
             <Button onClick={onEventDelete}>Delete</Button>
