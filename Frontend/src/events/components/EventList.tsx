@@ -8,6 +8,7 @@ import { Card } from "shared/components";
 import { useEvents } from "./EventProvider";
 import { createEvent } from "api/events";
 import { Event } from "types";
+import { toast } from "react-toastify";
 
 type NewEventMode = "BUTTON" | "FORM";
 
@@ -24,7 +25,9 @@ export const EventList = () => {
         const event: Event = res.data.event;
         eventsDispatch({ type: "add", payload: { event } });
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        toast.error(err.response.data.error);
+      });
   };
 
   return (
